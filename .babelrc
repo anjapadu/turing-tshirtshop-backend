@@ -3,9 +3,23 @@
         "@babel/preset-env"
     ],
     "plugins": [
-        ["@babel/plugin-proposal-decorators",{
-            "legacy": true
-        }],
+        [
+            "module-resolver",
+            {
+                "root": [
+                    "./src"
+                ],
+                "alias":{
+                    "@models": "./src/database/models/index.js"
+                }
+            }
+        ],
+        [
+            "@babel/plugin-proposal-decorators",
+            {
+                "legacy": true
+            }
+        ],
         "@babel/plugin-proposal-function-sent",
         "@babel/plugin-proposal-export-namespace-from",
         "@babel/plugin-proposal-numeric-separator",
