@@ -26,7 +26,7 @@ export default (sequelize, DataTypes) => {
         }
     }, {
 
-            tableName: 'orders',
+            tableName: 'order_detail',
             timestamps: false
         })
     order_detail["associate"] = (models) => {

@@ -10,6 +10,8 @@ import attribute_value from './attribute_value';
 import orders from './orders';
 import order_detail from './order_detail';
 import product_attribute from './product_attribute';
+import customer from './customer';
+import shipping_region from './shipping_region';
 
 const models = {
     products: databaseConnection.import("products", products),
@@ -20,9 +22,10 @@ const models = {
     attribute_value: databaseConnection.import("attribute_value", attribute_value),
     product_attribute: databaseConnection.import("product_attribute", product_attribute),
     orders: databaseConnection.import("orders", orders),
-    order_detail: databaseConnection.import("order_detail", order_detail)
+    order_detail: databaseConnection.import("order_detail", order_detail),
+    customer: databaseConnection.import("customer", customer),
+    shipping_region: databaseConnection.import("shipping_region", shipping_region),
 }
-
 
 Object.keys(models).forEach((modelName) => {
     if ('associate' in models[modelName]) {

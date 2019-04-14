@@ -4,7 +4,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import http from 'http';
 import graphRouter from './src/routes/graph'
-
+import './src/lib/utils'
 const app = express();
 app.disable('x-powered-by');
 app.use(bodyParser.urlencoded({

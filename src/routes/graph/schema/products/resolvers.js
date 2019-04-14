@@ -3,8 +3,6 @@ import cache from '../../../../lib/cache-service';
 
 export async function fetchProducts(parent, data, _, __) {
     try {
-        //Values asked for the client
-        let selectionsArray = __.operation.selectionSet.selections[0].selectionSet.selections;
         //Custom subqueries to get color and size of each product.
         let subQuerySize = "(SELECT  group_concat(av.`value`) size   from attribute a join attribute_value av ON a.attribute_id = av.attribute_id join product_attribute pa on (pa.attribute_value_id=av.attribute_value_id) where pa.product_id = `categories->product_category`.`product_id` and a.attribute_id = 1 group by av.attribute_id)"
         let subQueryColor = "(SELECT  group_concat(av.`value`) size   from attribute a join attribute_value av ON a.attribute_id = av.attribute_id join product_attribute pa on (pa.attribute_value_id=av.attribute_value_id) where pa.product_id = `categories->product_category`.`product_id` and a.attribute_id = 2 group by av.attribute_id)"
@@ -13,7 +11,6 @@ export async function fetchProducts(parent, data, _, __) {
             categoryId,
             departmentId
         } = data;
-
         //Custom attributes aliases and subqueries
         let customAttributes = {
             categoryName: [models.Sequelize.literal("`categories`.`name`"), "categoryName"],
@@ -23,15 +20,11 @@ export async function fetchProducts(parent, data, _, __) {
             colors: [models.Sequelize.literal(subQueryColor), "colors"],
             sizes: [models.Sequelize.literal(subQuerySize), "sizes"]
         };
-        selectionsArray = selectionsArray.map((item) => {
-            return customAttributes[item.name.value] ? customAttributes[item.name.value] : item.name.value
-        })
+        let selectionSet = __.selectionSet(customAttributes);
+
         return await cache.get(`product_c${categoryId || ''}_d${departmentId || ''}`, () => {
             return models.products.findAll({
-                attributes: [
-                    //only use attributes asked for the client
-                    ...(selectionsArray)
-                ],
+                attributes: selectionSet,
                 //Custom where if there is a filter active (categoryId, departmentid).
                 ...(categoryId || departmentId ? {
                     where: models.Sequelize.literal(`

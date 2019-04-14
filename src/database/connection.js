@@ -10,15 +10,6 @@ const databaseConfig = {
 }
 
 const db = databaseConfig;
-console.log({
-    username: db.username,
-    port: db.port,
-    password: db.password,
-    database: db.database,
-    host: db.host,
-    dialect: db.dialect,
-})
-
 const connection = new Sequelize({
     username: db.username,
     port: db.port,
@@ -26,17 +17,7 @@ const connection = new Sequelize({
     database: db.database,
     host: db.host,
     dialect: db.dialect,
-})
-// const connection = new Sequelize(db.database, db.username, db.password, {
-//     host: db.host,
-//     dialect: db.dialect,
-//     operatorsAliases: Sequelize.Op,
-//     port: db.port,
-
-//     dialectOptions: {
-//         multipleStatements: true,
-//     }
-// })
+});
 
 console.info('SETUP -- CONNECTTION TO DATABASE...');
 connection
