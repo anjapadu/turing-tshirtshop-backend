@@ -1,10 +1,10 @@
 import { Sequelize } from 'sequelize';
 
 const databaseConfig = {
-    "username": "anjapadu",
+    "username": "root",
     "password": "12345678",
-    "database": "turing",
-    "host": "turing.cj4nuesfxys9.us-west-2.rds.amazonaws.com",
+    "database": "tshirtshop",
+    "host": "tshirtshop.cj4nuesfxys9.us-west-2.rds.amazonaws.com",
     "port": 3306,
     "dialect": "mysql"
 }
@@ -17,6 +17,7 @@ const connection = new Sequelize({
     database: db.database,
     host: db.host,
     dialect: db.dialect,
+
 });
 
 console.info('SETUP -- CONNECTTION TO DATABASE...');

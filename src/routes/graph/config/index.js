@@ -1,5 +1,5 @@
 export default {
-    "graphqlEndpoint": "/graphql",
+    "graphqlEndpoint": "/api",
     "graphql": {
         "ide": false,
         "pretty": true

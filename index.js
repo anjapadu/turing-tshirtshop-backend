@@ -27,6 +27,7 @@ var corsOptions = {
         }
     }
 }
+app.use('/images', express.static('src/assets/images/products'));
 app.use(cors(corsOptions));
 app.use('/', graphRouter);
 app.use(function (err, req, res, next) {

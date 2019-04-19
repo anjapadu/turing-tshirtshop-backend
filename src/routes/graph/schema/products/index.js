@@ -3,19 +3,23 @@ import {
     GraphQLInt
 } from 'graphql'
 import ProductType from './typeDef';
+import { DataPage, findCountType } from '../_customTypes';
 import { fetchProducts } from './resolvers';
 
 const queries = {},
     mutations = {};
 
 queries.products = {
-    type: GraphQLList(ProductType),
+    type: findCountType(ProductType),
     args: {
         categoryId: {
             type: GraphQLInt
         },
         departmentId: {
             type: GraphQLInt
+        },
+        paging: {
+            type: DataPage
         }
     },
     resolve: fetchProducts
