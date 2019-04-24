@@ -32,7 +32,7 @@ export const fetchCustomers = async (parent, data, _, __) => {
 export const logInCustomer = async (parent, data, _, __) => {
 
     let _selectionSet = selectionSet(__, _customerCustomAttributes).filter(item => item != 'token');
-    const { email, password } = data;
+    const { email, password, isGoogle } = data;
     /**
      * Find customer by email
      */
@@ -56,8 +56,9 @@ export const logInCustomer = async (parent, data, _, __) => {
         throw new Error("USER_NOT_EXIST")
     /**
      * validate password
+     * And if came logged from google let him pass
      */
-    if (sha1(password) === response.password) {
+    if (sha1(password) === response.password || isGoogle) {
         response["token"] = encode(JSON.stringify({ id: response.id, scope: 'user', expiration: null }))
         return response;
     }

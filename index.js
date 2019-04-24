@@ -1,3 +1,4 @@
+
 import './src/lib/utils'
 import express from 'express';
 import cors from 'cors';
@@ -5,10 +6,14 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import http from 'http';
 import graphRouter from './src/routes/graph'
-import middleware from './src/lib/security-middleware';
+import middleware from './src/lib/security-middleware'
+import path from 'path'
+// if (process.env.NODE_ENV !== 'production') {
+
 
 const app = express();
 app.disable('x-powered-by');
+
 app.use(bodyParser.urlencoded({
     extended: true
 }));
@@ -18,18 +23,21 @@ app.use(bodyParser.json());
  */
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
 /**
+ * Activate and map static route for images
+ */
+app.use('/images', express.static(path.join(__dirname, 'src/assets/images/products')));
+/**     
  * Cors allowed origins
  */
 const allowedOrigins = {
-    "localhost:3000": true
+    "http://localhost:4000": true,
+    "http://localhost:4000/": true,
 }
 var corsOptions = {
     origin: function (origin, callback) {
-        return callback(null, true);
         if (allowedOrigins[origin]) {
-            callback(null, true)
+            return callback(null, true)
         } else {
-            // callback(null, true)
             callback(new Error('ERR_CORS'))
         }
     }
@@ -53,10 +61,7 @@ app.use('/api', mw);
  * Activate graphql 
  * */
 app.use('/', graphRouter);
-/**
- * Activate and map static route for images
- */
-app.use('/images', express.static('src/assets/images/products'));
+
 /**
  * Error formatter/handler
  */

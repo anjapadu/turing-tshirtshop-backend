@@ -50,6 +50,9 @@ queries.customerLogin = {
         },
         password: {
             type: GraphQLNonNull(GraphQLString)
+        },
+        isGoogle: {
+            type: GraphQLBoolean
         }
     },
     resolve: logInCustomer

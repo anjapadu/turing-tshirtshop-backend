@@ -18,7 +18,8 @@ function wrapStaticSecretInCallback(secret) {
         return cb(null, secret);
     };
 }
-module.exports = function (options) {
+
+export default function (options) {
     // if (!options || !options.secret) throw new Error('secret should be set');
     var secretCallback = options.secret;
     if (!isFunction(secretCallback)) {

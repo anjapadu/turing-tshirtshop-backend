@@ -13,7 +13,7 @@ export async function createOrder(parentData, data, _, __) {
 
     const {
         address_1,
-        address_2,
+        address_2 = "",
         city,
         country,
         name,
@@ -32,6 +32,9 @@ export async function createOrder(parentData, data, _, __) {
     const { number, exp_month, exp_year, cvc } = card;
 
     const stripe = new Stripe();
+    /**
+     * Create stripe payment method
+     */
     const token = await stripe.createPaymentMethod({
         type: "card",
         card: {
@@ -41,6 +44,9 @@ export async function createOrder(parentData, data, _, __) {
             cvc
         }
     })
+    /**
+     * Create intent object and intent payment
+     */
     const intent = {
         amount: total_amount.toFixed(2).replace(/\,|\./g, ''),
         currency: 'usd',
@@ -48,8 +54,11 @@ export async function createOrder(parentData, data, _, __) {
         payment_method: token.id
     }
     const paymentIntent = await stripe.createPaymentIntent(intent);
+    /**
+     * If paymentIntent creation valid confirm, save 
+     * in database, send email  and update user data
+     */
     const confirmationPayment = await stripe.confirmPayment(paymentIntent.id)
-
     if (confirmationPayment.status === 'succeeded') {
         const insertQuery = await models.orders.create({
             total_amount,
@@ -62,6 +71,11 @@ export async function createOrder(parentData, data, _, __) {
             })
         let response = insertQuery.get({ plain: true })
         const responseDetail = await models.order_detail.bulkCreate(detail.map(item => ({ ...item, oreder_id: response.id })), { returning: true })
+
+        /**
+         * Using gmail email to send emails
+         * This is not ideal but works for the scope of the challenge. 
+         * */
 
         var transporter = nodemailer.createTransport({
             service: 'gmail',
@@ -77,12 +91,34 @@ export async function createOrder(parentData, data, _, __) {
             },
             raw: true
         })
+        let detailHtml = detail.map((item) => {
+            return `<li>${item.product_name} x ${item.quantity} = $${parseInt(item.quantity) * parseFloat(item.unit_cost)}</li>`
+        }).join('');
         const mailOptions = {
             from: 'lyance_test@gmail.com', // sender address
             to: email, // list of receivers
             subject: `Your order from ${moment().format('DD-MM-YYYY @ HH:mm')}`, // Subject line
-            html: '<p>Order confirmed!!!</p>'// plain text body
+            html: `<p>Order confirmed!!!</p>
+                <ul>
+                ${detailHtml}
+                </ul>
+            <p>Total: $ ${total_amount}</p>
+                `
         };
+        models.customer.update({
+            address_1,
+            address_2,
+            city,
+            country,
+            name,
+            postal_code,
+            region,
+            shipping_region_id
+        }, {
+                where: {
+                    id: _.user.id
+                }
+            })
         transporter.sendMail(mailOptions, function (err, info) {
             if (err)
                 console.log(err)
