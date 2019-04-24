@@ -20,6 +20,12 @@ queries.products = {
         },
         paging: {
             type: DataPage
+        },
+        id: {
+            type: GraphQLInt
+        },
+        notId: {
+            type: GraphQLInt
         }
     },
     resolve: fetchProducts

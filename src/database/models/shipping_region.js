@@ -18,6 +18,11 @@ export default (sequelize, DataTypes) => {
         models.shipping_region.belongsTo(models.customer, {
             foreignKey: 'shipping_region_id'
         });
+        models.shipping_region.hasMany(models.shipping, {
+            foreignKey: 'shipping_region_id',
+            targetKey: 'shipping_region_id',
+            as: 'shipping'
+        })
     }
     return shipping_region;
 }

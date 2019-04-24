@@ -1,7 +1,8 @@
 import {
     GraphQLString,
     GraphQLList,
-    GraphQLNonNull
+    GraphQLNonNull,
+    GraphQLBoolean
 } from 'graphql'
 import CustomerType from './typeDef';
 import {
@@ -27,6 +28,9 @@ mutations.registerCustomer = {
         },
         password: {
             type: GraphQLNonNull(GraphQLString)
+        },
+        isGoogle: {
+            type: GraphQLBoolean
         }
     },
     resolve: registerCustomer

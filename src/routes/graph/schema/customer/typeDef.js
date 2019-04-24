@@ -9,9 +9,6 @@ export default new GraphQLObjectType({
     description: 'customer',
     fields: function () {
         return {
-            id: {
-                type: GraphQLInt
-            },
             name: {
                 type: GraphQLString
             },
@@ -54,6 +51,9 @@ export default new GraphQLObjectType({
             mob_phone: {
                 type: GraphQLString
             },
+            token: {
+                type: GraphQLString
+            }
         }
     }
 })

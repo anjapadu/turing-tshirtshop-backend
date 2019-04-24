@@ -7,8 +7,7 @@ export default (sequelize, DataTypes) => {
             autoIncrement: true
         },
         department_id: {
-            type: DataTypes.INTEGER,
-            field: 'department_id'
+            type: DataTypes.INTEGER
         },
         name: {
             type: DataTypes.STRING

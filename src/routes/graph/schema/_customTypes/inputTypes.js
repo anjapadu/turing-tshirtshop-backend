@@ -3,6 +3,9 @@ import {
     GraphQLInputObjectType
 } from 'graphql'
 
+/**
+ * Custom input object for paging.
+ */
 export const DataPage = new GraphQLInputObjectType({
     name: "DataPage",
     fields: () => ({
