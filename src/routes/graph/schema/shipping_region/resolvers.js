@@ -9,6 +9,9 @@ export async function fetchShippingRegion() {
                     model: models.shipping,
                     as: "shipping"
                 }
+            ],
+            order: [
+                ["id", "ASC"]
             ]
         })
     } catch (e) {

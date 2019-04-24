@@ -16,6 +16,7 @@ class Stripe {
         try {
             return await this.stripe.paymentIntents.create(intent)
         } catch (e) {
+            console.log(e)
             throw new Error("PAYMENT_FAILED")
         }
     }
@@ -23,6 +24,7 @@ class Stripe {
         try {
             return await this.stripe.paymentIntents.confirm(paymentIntentId)
         } catch (e) {
+            console.log(e)
             throw new Error("PAYMENT_FAILED")
         }
     }

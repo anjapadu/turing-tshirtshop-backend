@@ -38,10 +38,7 @@ var corsOptions = {
  * Activate cors
  */
 app.use(cors(corsOptions));
-/**
- * Activate graphql 
- * */
-app.use('/', graphRouter);
+
 /**
  * Allow security middleware in graphql endpoint but not ask for credentials.
  * This way we can allow all requests to pass the firs layer allowing the graphql resolvers to read the token encrypted data if it has one.  
@@ -52,6 +49,10 @@ let mw = middleware({
     credentialsRequired: false
 })
 app.use('/api', mw);
+/**
+ * Activate graphql 
+ * */
+app.use('/', graphRouter);
 /**
  * Activate and map static route for images
  */

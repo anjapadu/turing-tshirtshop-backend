@@ -82,6 +82,7 @@ module.exports = function (options) {
                 try {
                     decoded = decode(token)
                     decoded = JSON.parse(decoded);
+                    console.log('=======', { decoded })
                     callback(null, decoded);
                 } catch (e) {
                     callback(new UnauthorizedError('invalid_token', e));

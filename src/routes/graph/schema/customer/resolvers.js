@@ -30,6 +30,7 @@ export const fetchCustomers = async (parent, data, _, __) => {
  * Login
  */
 export const logInCustomer = async (parent, data, _, __) => {
+
     let _selectionSet = selectionSet(__, _customerCustomAttributes).filter(item => item != 'token');
     const { email, password } = data;
     /**

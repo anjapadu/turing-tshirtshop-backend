@@ -17,7 +17,8 @@ export async function fetchProducts(parent, data, _, __) {
             departmentId,
             paging,
             id,
-            notId
+            notId,
+            autoComplete
         } = data;
         /**
          * Custom attributes aliases and subqueries
@@ -31,6 +32,51 @@ export async function fetchProducts(parent, data, _, __) {
             sizes: [models.Sequelize.literal(subQuerySize), "sizes"]
         };
         let _selectionSet = selectionSetWithCount(__, customAttributes);
+
+        if (autoComplete) {
+            const response = await models.products.findAndCountAll({
+                attributes: _selectionSet,
+                /**
+                 * Custom where if there is a filter active (categoryId, departmentid).
+                 */
+                where: models.Sequelize.literal(`
+                ${`\`product\`.\`display\` IN (0, 1,2,3,4)`}   
+                ${id ? ` AND \`product\`.\`product_id\` = ${id}` : ''}
+                ${departmentId ? ` AND \`categories->department\`.\`department_id\` = ${departmentId}` : ''}
+                ${categoryId ? ` AND categories.category_id = ${categoryId}` : ''}
+                ${notId ? ` AND \`product\`.\`product_id\` != ${notId}` : ''}
+                ${autoComplete ? ` AND \`product\`.\`name\` LIKE '%${autoComplete}%'` : ''}
+                `),
+                subQuery: false,
+                include: [
+                    {
+                        nested: false,
+                        model: models.categories,
+                        attributes: [
+                            "name",
+                            "category_id"
+                        ],
+                        as: 'categories',
+                        include: [
+                            {
+                                nested: false,
+                                as: "department",
+                                attributes: ["name", "department_id"],
+                                model: models.departments,
+
+                            }
+                        ]
+                    }
+                ],
+                limit: paging ? paging.limit : null,
+                offset: paging ? paging.offset : null,
+                raw: true,
+            });
+            return {
+                data: response.rows,
+                count: response.count
+            }
+        }
         /**
          * Cache by product or by request
          */
@@ -47,6 +93,7 @@ export async function fetchProducts(parent, data, _, __) {
                 ${departmentId ? ` AND \`categories->department\`.\`department_id\` = ${departmentId}` : ''}
                 ${categoryId ? ` AND categories.category_id = ${categoryId}` : ''}
                 ${notId ? ` AND \`product\`.\`product_id\` != ${notId}` : ''}
+                ${autoComplete ? ` AND \`product\`.\`name\` LIKE '%${autoComplete}%'` : ''}
                 `),
                 subQuery: false,
                 include: [

@@ -1,4 +1,5 @@
 import {
+    GraphQLString,
     GraphQLList,
     GraphQLInt
 } from 'graphql'
@@ -26,6 +27,9 @@ queries.products = {
         },
         notId: {
             type: GraphQLInt
+        },
+        autoComplete: {
+            type: GraphQLString
         }
     },
     resolve: fetchProducts
