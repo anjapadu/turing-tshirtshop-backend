@@ -25,7 +25,10 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
 /**
  * Activate and map static route for images
  */
-app.use('/images', express.static(path.join(__dirname, 'src/assets/images/products')));
+if (process.env.NODE_ENV === 'production')
+    app.use('/images', express.static(path.join(__dirname, 'images/products')));
+else
+    app.use('/images', express.static(path.join(__dirname, 'src/assets/images/products')));
 /**     
  * Cors allowed origins
  */
