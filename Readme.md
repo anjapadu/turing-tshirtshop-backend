@@ -10,6 +10,17 @@
 ----> So i just realize that u guys updated the requirements to follow the swagger documentation and when i started this was not a requirement... that's the reason i went for GraphQL. (It's also fun to vary from time to time). 
 I imagine you have some automatic test so i will add rest endpoints to my api according to the documentation in the next few days. Will mantain graphql endpoint also just to not modify the frontend excesively.
 
+## ENV
+For production you should update the .env 
+For development it is static with my amazon rds endpoint can be updated at src/database/connection.js 
+````
+DB_USER=
+DB_PASS=
+DB_DATABASE=
+DB_HOST=
+DB_PORT=
+```
+
 ----
 ## Installation
 ```bash
