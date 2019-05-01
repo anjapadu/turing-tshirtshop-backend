@@ -37,7 +37,11 @@ export const logInCustomer = async (parent, data, _, __) => {
      * Find customer by email
      */
     const response = await models.customer.findOne({
-        attributes: [..._selectionSet, 'password', 'id'],
+        attributes: [
+            ..._selectionSet,
+            'password',
+            'id'
+        ],
         where: {
             email
         },
@@ -102,6 +106,6 @@ export const registerCustomer = async (parent, data, _, __) => {
         response["token"] = encode(JSON.stringify({ id: response.id, scope: 'user', expiration: null }));
         return response;
     } catch (e) {
-        throw new Error("INSERT_ERROR")
+        throw new Error("INSERT_ERROR", e)
     }
 }

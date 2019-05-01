@@ -45,7 +45,7 @@ export async function fetchProducts(parent, data, _, __) {
                 ${departmentId ? ` AND \`categories->department\`.\`department_id\` = ${departmentId}` : ''}
                 ${categoryId ? ` AND categories.category_id = ${categoryId}` : ''}
                 ${notId ? ` AND \`product\`.\`product_id\` != ${notId}` : ''}
-                ${autoComplete ? ` AND \`product\`.\`name\` LIKE '%${autoComplete}%'` : ''}
+                ${autoComplete ? ` AND \`product\`.\`name\` LIKE '%${autoComplete}%' OR \`product\`.\`description\` LIKE '%${autoComplete}%'` : ''}
                 `),
                 subQuery: false,
                 include: [

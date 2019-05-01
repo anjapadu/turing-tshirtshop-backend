@@ -2,7 +2,7 @@ const stripe = require('stripe');
 
 class Stripe {
     constructor() {
-        this.stripe = stripe('sk_test_atNKmqivQ5ODRTAmIleFFkYi00NTfdGK5h');
+        this.stripe = stripe('sk_test_lomdOfxbm7QDgZWvR82UhV6D');
     }
 
     async createPaymentMethod(card) {
@@ -26,6 +26,17 @@ class Stripe {
         } catch (e) {
             console.log(e)
             throw new Error("PAYMENT_FAILED")
+        }
+    }
+    async updatePaymentIntent(paymentIntentId, order_id) {
+        try {
+            return await this.stripe.paymentIntents.update(paymentIntentId, {
+                metadata: {
+                    order_id: `${order_id}`
+                }
+            })
+        } catch (e) {
+            throw new Error("ERROR_UPDATING_METADATA", e);
         }
     }
 }

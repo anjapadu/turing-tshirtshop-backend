@@ -7,10 +7,8 @@ import moment from 'moment';
 
 export async function createOrder(parentData, data, _, __) {
     if (!_.user) {
-        throw new Errow("AUTHORIZATION_ERROR");
+        throw new Error("AUTHORIZATION_ERROR");
     }
-
-
     const {
         address_1,
         address_2 = "",
@@ -70,7 +68,14 @@ export async function createOrder(parentData, data, _, __) {
                 raw: true
             })
         let response = insertQuery.get({ plain: true })
-        const responseDetail = await models.order_detail.bulkCreate(detail.map(item => ({ ...item, oreder_id: response.id })), { returning: true })
+        const responseDetail = await models.order_detail.bulkCreate(detail.map(item => ({ ...item, order_id: response.id })), { returning: true })
+
+        try {
+            const updatePayment = await stripe.updatePaymentIntent(confirmationPayment.id, response.id);
+            console.log({ updatePayment })
+        } catch (e) {   
+            console.log('ERROR AT UPDATE METADATA', e);
+        }
 
         /**
          * Using gmail email to send emails
@@ -134,6 +139,4 @@ export async function createOrder(parentData, data, _, __) {
     } else {
         throw new Error("PAYMENT_FAILED")
     }
-
-
 }

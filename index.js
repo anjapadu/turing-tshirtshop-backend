@@ -8,8 +8,6 @@ import http from 'http';
 import graphRouter from './src/routes/graph'
 import middleware from './src/lib/security-middleware'
 import path from 'path'
-// if (process.env.NODE_ENV !== 'production') {
-
 
 const app = express();
 app.disable('x-powered-by');
@@ -35,9 +33,12 @@ else
 const allowedOrigins = {
     "http://localhost:4000": true,
     "http://localhost:4000/": true,
+    "http://34.217.129.189:4000": true,
+    "http://34.217.129.189:4000/": true,
 }
 var corsOptions = {
     origin: function (origin, callback) {
+        return callback(null, true)
         if (allowedOrigins[origin]) {
             return callback(null, true)
         } else {
