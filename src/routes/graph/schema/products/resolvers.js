@@ -34,7 +34,7 @@ export async function fetchProducts(parent, data, _, __) {
         /**
          * Cache by product or by request
          */
-        let cacheKey = id ? `product_${id}` : `product_c${categoryId || ''}_d${departmentId || ''}_o${paging ? paging.offset : ''}_ac${autoComplete || ''}_c${color || ''}_s${size || ''}`;
+        let cacheKey = id ? `product_${id}` : `product_c${categoryId || ''}_d${departmentId || ''}_o${paging ? paging.offset : ''}_ac${autoComplete || ''}_c${color || ''}_s${size || ''}_mp${maxPrice || ''}_mip${minPrice || ''}`;
         /**
          * If is filtered by color or size use custom query. 
          * (UPDATE TO CUSTOM RAW QUERY TO SUPORT COLOR / SIZE FILTER)
