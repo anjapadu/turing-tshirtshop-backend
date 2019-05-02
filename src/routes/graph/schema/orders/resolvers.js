@@ -73,7 +73,7 @@ export async function createOrder(parentData, data, _, __) {
         try {
             const updatePayment = await stripe.updatePaymentIntent(confirmationPayment.id, response.id);
             console.log({ updatePayment })
-        } catch (e) {   
+        } catch (e) {
             console.log('ERROR AT UPDATE METADATA', e);
         }
 
@@ -107,8 +107,7 @@ export async function createOrder(parentData, data, _, __) {
                 <ul>
                 ${detailHtml}
                 </ul>
-            <p>Total: $ ${total_amount}</p>
-                `
+            <p>Total: $ ${total_amount}</p>`
         };
         models.customer.update({
             address_1,

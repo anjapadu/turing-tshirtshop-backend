@@ -1,8 +1,8 @@
 ## Turing T-SHIRTSHOP Backend
 
 ## ENV
-For production you should update the .env 
-For development it is static with my amazon rds endpoint can be updated at src/database/connection.js 
+Custom ENV to RDS Amazon database in source
+Can be updated with the variables
 ```bash
 DB_USER=
 DB_PASS=
@@ -10,18 +10,17 @@ DB_DATABASE=
 DB_HOST=
 DB_PORT=
 ```
-
 ----
 ## Installation
 ```bash
-$ yarn 
+$ yarn  or npm install
 ```
 ## Run the project
 ```bash
-$ yarn  start
+$ yarn start or npm start
 ```
 
 ## Generate production files
 ```bash
-$ yarn build
+$ yarn build or npm run build
 ```
