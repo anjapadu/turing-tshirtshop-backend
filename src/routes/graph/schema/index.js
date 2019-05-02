@@ -10,6 +10,7 @@ import {
 import { queries as productQueries } from './products';
 import { queries as departmentQueries } from './departments';
 import { queries as shippingRegionQueries } from './shipping_region';
+import { queries as attributeQueries } from './attributes';
 import { mutations as orderMutations } from './orders';
 
 
@@ -21,7 +22,8 @@ const query = new GraphQLObjectType({
         ...customerQueries,
         ...productQueries,
         ...departmentQueries,
-        ...shippingRegionQueries
+        ...shippingRegionQueries,
+        ...attributeQueries
     })
 })
 

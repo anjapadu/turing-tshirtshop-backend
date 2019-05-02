@@ -47,6 +47,10 @@ export default (sequelize, DataTypes) => {
             foreignKey: 'product_id',
             through: models.product_attribute
         })
+
+        models.products.hasMany(models.product_attribute, {
+            foreignKey: 'id'
+        })
     }
 
     return product;

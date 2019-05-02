@@ -1,14 +1,33 @@
 import {
     GraphQLString,
-    GraphQLList,
-    GraphQLInt
+    GraphQLFloat,
+    GraphQLInt,
+    GraphQLObjectType,
 } from 'graphql'
 import ProductType from './typeDef';
 import { DataPage, findCountType } from '../_customTypes';
-import { fetchProducts } from './resolvers';
+import { fetchProducts, fetchMaxMinPrice } from './resolvers';
 
 const queries = {},
     mutations = {};
+
+queries.maxMinPrice = {
+    type: new GraphQLObjectType({
+        name: 'maxMinPrice',
+        description: '',
+        fields: function () {
+            return {
+                min: {
+                    type: GraphQLFloat
+                },
+                max: {
+                    type: GraphQLFloat
+                }
+            }
+        }
+    }),
+    resolve: fetchMaxMinPrice
+}
 
 queries.products = {
     type: findCountType(ProductType),
@@ -30,6 +49,18 @@ queries.products = {
         },
         autoComplete: {
             type: GraphQLString
+        },
+        color: {
+            type: GraphQLString
+        },
+        size: {
+            type: GraphQLString
+        },
+        minPrice: {
+            type: GraphQLFloat
+        },
+        maxPrice: {
+            type: GraphQLFloat
         }
     },
     resolve: fetchProducts

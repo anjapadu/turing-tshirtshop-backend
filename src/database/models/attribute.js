@@ -15,5 +15,14 @@ export default (sequelize, DataTypes) => {
             timestamps: false
         })
 
+    attribute["associate"] = (models) => {
+
+
+        models.attribute.hasMany(models.attribute_value, {
+            foreignKey: 'attribute_id',
+            sourceKey: 'id'
+        })
+    }
+
     return attribute;
 }

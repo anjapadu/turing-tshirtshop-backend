@@ -8,6 +8,7 @@ import http from 'http';
 import graphRouter from './src/routes/graph'
 import middleware from './src/lib/security-middleware'
 import path from 'path'
+import rateLimit from 'express-rate-limit';
 
 const app = express();
 app.disable('x-powered-by');
@@ -31,6 +32,8 @@ else
  * Cors allowed origins
  */
 const allowedOrigins = {
+    "http://0.0.0.0:4000/":true,
+    "http://0.0.0.0:4000":true,
     "http://localhost:4000": true,
     "http://localhost:4000/": true,
     "http://34.217.129.189:4000": true,
@@ -51,12 +54,25 @@ var corsOptions = {
  */
 app.use(cors(corsOptions));
 
+
+/**
+ * Set and activate request limiter for endpoint /api
+ * allowing 40 calls máx. per minute
+ */
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, // 1 minutes
+    max: 40
+})
+
+app.use('/api', limiter);
+
 /**
  * Allow security middleware in graphql endpoint but not ask for credentials.
  * This way we can allow all requests to pass the firs layer allowing the graphql resolvers to read the token encrypted data if it has one.  
  * (It's possible also to create 2 graphql endpoints 1 private and 1 public)
  * Remember graphql endpoint is configured as "/api"
  */
+
 let mw = middleware({
     credentialsRequired: false
 })

@@ -13,7 +13,5 @@ export default (sequelize, DataTypes) => {
             tableName: 'product_attribute',
             timestamps: false
         })
-
-
     return product_attribute;
-}
+}   
