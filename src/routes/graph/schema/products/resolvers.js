@@ -3,47 +3,16 @@ import cache from '../../../../lib/cache-service';
 
 export async function fetchMaxMinPrice(parent, data, _, __) {
     try {
-        console.log('LLEGOO');
         const max = await models.products.max('price');
         const min = await models.products.min('price');
-
         return {
             min,
             max
         }
-
-
     } catch (e) {
         console.log({ e })
     }
 }
-
-// products(
-//     categoryId: null
-//     departmentId: null
-//     paging:{
-//       limit: 1
-//       offset: 0				
-//     }
-//     id: null
-//     notId: null
-//     autoComplete: null
-//     color: null
-//     size: null,
-//     minPrice: null
-//     maxPrice: null
-
-//   ){		
-//     data{
-//       id
-//       name
-//       categoryId
-//       departmentId
-//       colors
-//       sizes
-//     }
-//     count
-//   }
 
 export async function fetchProducts(parent, data, _, __) {
     try {
@@ -105,7 +74,7 @@ export async function fetchProducts(parent, data, _, __) {
                     ) products
                         ${color || size ? whereQuery : ''}
                         ${paging ? `limit ${paging.limit}` : ''}
-                        ${paging ? `offset ${paging.offset}` : ''}`;
+                        ${paging ? `offset ${paging.offset || 0}` : ''}`;
 
             let countQuery = `SELECT COUNT(1) count from (
                         ${insideQuery}

@@ -41,7 +41,7 @@ const allowedOrigins = {
 }
 var corsOptions = {
     origin: function (origin, callback) {
-        return callback(null, true)
+        // return callback(null, true)
         if (allowedOrigins[origin]) {
             return callback(null, true)
         } else {
@@ -61,7 +61,7 @@ app.use(cors(corsOptions));
  */
 const limiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 minutes
-    max: 40
+    max: 60
 })
 
 app.use('/api', limiter);
