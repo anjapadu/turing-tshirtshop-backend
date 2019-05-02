@@ -24,3 +24,8 @@ $ yarn start or npm start
 ```bash
 $ yarn build or npm run build
 ```
+
+## Run Production
+```bash
+$ cd dist/ && yarn install && yarn production start
+```
