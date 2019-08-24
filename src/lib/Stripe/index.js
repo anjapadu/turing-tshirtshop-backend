@@ -2,7 +2,7 @@ const stripe = require('stripe');
 
 class Stripe {
     constructor() {
-        this.stripe = stripe('sk_test_lomdOfxbm7QDgZWvR82UhV6D');
+        this.stripe = stripe('sk_test_============================');
     }
 
     async createPaymentMethod(card) {

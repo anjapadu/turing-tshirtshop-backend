@@ -1,38 +1,36 @@
-import Sequelize from 'sequelize';
-import databaseConnection from '../connection'
+import Sequelize from "sequelize";
+import databaseConnection from "../connection"
 
-import products from './product';
-import categories from './category';
-import departments from './department';
-import product_category from './product_category';
-import attribute from './attribute';
-import attribute_value from './attribute_value';
-import orders from './orders';
-import order_detail from './order_detail';
-import product_attribute from './product_attribute';
-import customer from './customer';
-import shipping_region from './shipping_region';
-import review from './review';
-import shipping from './shipping';
-
+import users from "./users";
+import donation from "./donation"
+import languages from "./languages";
+import streaming from "./streaming";
+import hotels from "./hotels";
+import posts from "./posts";
+import postDetail from "./post_detail";
+import pages from "./pages";
+import pages_detail from "./pages_detail";
+import pages_section from "./pages_section";
+import eventDays from './event_days';
+import activities from './activities';
+import activitiesDetail from './activities_datail';
 const models = {
-    products: databaseConnection.import("products", products),
-    categories: databaseConnection.import("categories", categories),
-    departments: databaseConnection.import("departments", departments),
-    product_category: databaseConnection.import("product_category", product_category),
-    attribute: databaseConnection.import("attribute", attribute),
-    attribute_value: databaseConnection.import("attribute_value", attribute_value),
-    product_attribute: databaseConnection.import("product_attribute", product_attribute),
-    orders: databaseConnection.import("orders", orders),
-    order_detail: databaseConnection.import("order_detail", order_detail),
-    customer: databaseConnection.import("customer", customer),
-    shipping_region: databaseConnection.import("shipping_region", shipping_region),
-    review: databaseConnection.import("review", review),
-    shipping: databaseConnection.import("shipping", shipping)
+    users:databaseConnection.import("users", users),
+    donation:databaseConnection.import("donation", donation),
+    languages:databaseConnection.import("languages", languages),
+    hotels:databaseConnection.import("hotels", hotels),
+    posts:databaseConnection.import("posts", posts),
+    postDetail:databaseConnection.import("postDetail", postDetail),
+    pages:databaseConnection.import("pages", pages),
+    pages_detail:databaseConnection.import("pages_detail", pages_detail),
+    pages_section:databaseConnection.import("pages_section", pages_section),
+    eventDays:databaseConnection.import("eventDays", eventDays),
+    activities:databaseConnection.import("activities", activities),
+    activitiesDetail:databaseConnection.import("activitiesDetail", activitiesDetail)
 }
 
 Object.keys(models).forEach((modelName) => {
-    if ('associate' in models[modelName]) {
+    if ("associate" in models[modelName]) {
         models[modelName].associate(models);
     }
 })

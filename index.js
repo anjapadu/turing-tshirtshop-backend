@@ -25,9 +25,9 @@ app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
  * Activate and map static route for images
  */
 if (process.env.NODE_ENV === 'production')
-    app.use('/images', express.static(path.join(__dirname, 'images/products')));
+    app.use('/images', express.static(path.join(__dirname, 'images/')));
 else
-    app.use('/images', express.static(path.join(__dirname, 'src/assets/images/products')));
+    app.use('/images', express.static(path.join(__dirname, 'src/assets/images/')));
 /**     
  * Cors allowed origins
  */
@@ -38,10 +38,16 @@ const allowedOrigins = {
     "http://localhost:4000/": true,
     "http://34.217.129.189:4000": true,
     "http://34.217.129.189:4000/": true,
+    "http://167.99.127.159":true,
+    "http://167.99.127.159/":true,
+    "http://bethelcms.tednologia.com/":true,
+    "http://bethelcms.tednologia.com":true,
+    "undefined":true
 }
+
+
 var corsOptions = {
     origin: function (origin, callback) {
-        // return callback(null, true)
         if (allowedOrigins[origin]) {
             return callback(null, true)
         } else {

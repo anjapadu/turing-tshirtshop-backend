@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js --exec babel-node --host=0.0.0.0",
-    "build": "webpack --mode production --env.production --progress",
+    "build": "webpack --mode production --env.production --progress && scp dist/server.js bethel:/var/www/bethel-backend/ && scp package.json bethel:/var/www/bethel-backend/",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -20,6 +20,7 @@
     "@babel/plugin-proposal-throw-expressions": "^7.2.0",
     "@babel/plugin-transform-regenerator": "^7.4.3",
     "@babel/plugin-transform-runtime": "^7.4.3",
+    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-plugin-module-resolver": "^3.2.0",
@@ -30,7 +31,6 @@
     "webpack-node-externals": "^1.7.2"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.4.3",
     "@babel/runtime": "^7.4.3",
     "async": "^2.6.2",
     "babel-loader": "^8.0.5",
@@ -42,8 +42,10 @@
     "express-graphql": "^0.7.1",
     "express-rate-limit": "^3.5.0",
     "express-unless": "^0.5.0",
+    "fs-extra": "^8.1.0",
     "graphql": "^14.2.1",
     "graphql-type-json": "^0.3.0",
+    "hashids": "^1.2.2",
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "mysql2": "^1.6.5",

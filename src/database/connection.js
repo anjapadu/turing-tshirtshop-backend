@@ -9,6 +9,15 @@ const databaseConfig = {
     "port": process.env.DB_PORT,
     "dialect": "mysql"
 }
+
+// const databaseConfig = {
+//     "username": 'root',
+//     "password": 'mi201000',
+//     "database": 'bethel',
+//     "host": 'localhost',
+//     "port": 3306,
+//     "dialect": "mysql"
+// }
 console.log(databaseConfig);
 
 const db = databaseConfig;
